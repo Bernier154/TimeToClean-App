@@ -7,7 +7,7 @@ class TaskProvider {
   List<Task> taskList = [];
   List<Task> get sortedTaskList {
     List<Task> l = List<Task>.from(taskList);
-    l.sort((a, b) => b.progressDecimalPercent.compareTo(a.progressDecimalPercent));
+    l.sort((a, b) => a.timeLeftMilliseconds.compareTo(b.timeLeftMilliseconds));
     return l;
   }
 

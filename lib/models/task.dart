@@ -57,6 +57,10 @@ class Task {
     return 'TIME TO CLEAN';
   }
 
+  int get timeLeftMilliseconds {
+    return doItBy.difference(DateTime.now()).inMilliseconds;
+  }
+
   double get progressDecimalPercent {
     Duration diff = doItBy.difference(DateTime.now());
     return max(0, min(1, 1 - (diff.inSeconds / interval.inSeconds)));
