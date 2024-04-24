@@ -12,14 +12,13 @@ class TaskProvider {
   }
 
   void createOrUpdate(Task task) {
-    log(task.id);
-    inspect(taskList);
     final index = taskList.indexWhere((t) => t.id == task.id);
     log(index.toString());
     if (index != -1) {
       taskList[index] = task;
     } else {
       taskList.add(task);
+      task.scheduleNotification();
     }
 
     save();
@@ -38,7 +37,9 @@ class TaskProvider {
   void deleteTask(String taskId) {
     Task? task = getTask(taskId);
     if (task != null) {
+      task.deleteScheduledNotification();
       taskList = taskList.where((t) => t.id != taskId).toList();
+      save();
     }
   }
 

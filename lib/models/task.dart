@@ -66,10 +66,8 @@ class Task {
     return max(0, min(1, 1 - (diff.inSeconds / interval.inSeconds)));
   }
 
-  void reset() async {
-    lastReset = DateTime.now();
+  Future<void> deleteScheduledNotification() async {
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
     final List<PendingNotificationRequest> pendingNotificationRequests = await flutterLocalNotificationsPlugin.pendingNotificationRequests();
 
     try {
@@ -78,7 +76,10 @@ class Task {
     } catch (e) {
       developer.log(e.toString());
     }
+  }
 
+  Future<void> scheduleNotification() async {
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     Random random = Random();
     int notifId = random.nextInt(10000);
 
@@ -98,5 +99,11 @@ class Task {
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
     );
+  }
+
+  void reset() async {
+    lastReset = DateTime.now();
+    await deleteScheduledNotification();
+    await scheduleNotification();
   }
 }

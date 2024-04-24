@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ttc_app/components/content_box.dart';
 import 'package:ttc_app/models/task.dart';
 import 'package:ttc_app/theme.dart';
